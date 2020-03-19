@@ -23,6 +23,10 @@ io.sockets.on('connection', (socket) => {
 
     // 5. Listen to update_pi event
     socket.on('update_pi', (data) => {
-        console.log('Update', data);
+        console.log(`Update Received from: ${socket.id}; Data: ${data};`);
+    })
+
+    socket.on('disconnect', () => {
+        console.log(`Socket Session Destroyed: ${socket.id}`);
     })
 })
