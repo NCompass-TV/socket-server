@@ -19,7 +19,7 @@ app.set("io", io);
 // 4. Check new connection on socket
 io.sockets.on('connection', (socket) => {
     // Connection Established
-    console.log('Socket Connection established', socket.id);
+    console.log('Connected', socket.id);
 
     // 5. Listen to update_pi event
     socket.on('update_pi', (data) => {
@@ -27,7 +27,13 @@ io.sockets.on('connection', (socket) => {
         io.sockets.emit('launch_update', data);
     })
 
+    // 6. Listen to reset_pi event
+    socket.on('reset_pi', (data) => {
+        console.log(`Reset Event from: ${socket.id}; Data: ${data};`);
+        io.sockets.emit('launch_reset', data);
+    })
+
     socket.on('disconnect', () => {
-        console.log(`Socket Session Destroyed: ${socket.id}`);
+        console.log(`Destroyed: ${socket.id}`);
     })
 })
