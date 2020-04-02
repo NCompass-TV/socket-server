@@ -33,6 +33,12 @@ io.sockets.on('connection', (socket) => {
         io.sockets.emit('launch_reset', data);
     })
 
+    // 7. Listen to screenshot_pi
+    socket.on('screenshot_pi', (data) => {
+        console.log(`Reset Event from: ${socket.id}; Data: ${data};`);
+        io.sockets.emit('launch_screenshot', data);
+    })
+
     socket.on('disconnect', () => {
         console.log(`Destroyed: ${socket.id}`);
     })
