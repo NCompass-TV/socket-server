@@ -1,0 +1,30 @@
+{
+  "name": "socket-server",
+  "version": "1.0.0",
+  "description": "Socket Server for communication between pi and dashboard.",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NCompass-TV/socket-server.git"
+  },
+  "keywords": [
+    "Socket",
+    "Server",
+    "Communication"
+  ],
+  "author": "Vhin Gabuat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NCompass-TV/socket-server/issues"
+  },
+  "homepage": "https://github.com/NCompass-TV/socket-server#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  }
+}
