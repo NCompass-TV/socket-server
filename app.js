@@ -35,7 +35,7 @@ io.sockets.on('connection', (socket) => {
 
     // 7. Listen to screenshot_pi
     socket.on('screenshot_pi', (data) => {
-        console.log(`Reset Event from: ${socket.id}; Data: ${data};`);
+        console.log(`Screenshot Event from: ${socket.id}; Data: ${data};`);
         io.sockets.emit('launch_screenshot', data);
     })
 
