@@ -39,6 +39,18 @@ io.sockets.on('connection', (socket) => {
         io.sockets.emit('launch_screenshot', data);
     })
 
+    // 8. Listen to is_online
+    socket.on('is_online', (data) => {
+        console.log(`Online Checker Event from: ${socket.id}; Data: ${data}`);
+        io.sockets.emit('status_check', data);
+    })
+
+    socket.on('pi_is_online', (data) => {
+        console.log('Pi is online: ', data);
+        io.sockets.emit('pi_status_online', data);
+    })
+
+    // On Disconnect
     socket.on('disconnect', () => {
         console.log(`Destroyed: ${socket.id}`);
     })
