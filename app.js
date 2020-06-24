@@ -192,7 +192,7 @@ io.sockets.on('connection', (socket) => {
                 status: 1
             }
 
-            // await offlineNotification(offline_player);
+            await offlineNotification(offline_player);
 
             console.log('DISCONNECT', disconnected_socket_license.licenseId)
         } catch(err) {
