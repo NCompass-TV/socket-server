@@ -110,8 +110,8 @@ io.sockets.on('connection', (socket) => {
     //#################### Pi Events #################### 
 
     // Fresh Pi
-    socket.on('pi_license_saved', data => {
-        console.log('pi_license_saved', socket.id, data)
+    socket.on('PS_pi_license_saved', data => {
+        console.log('PS_pi_license_saved', socket.id, data)
 
         socket_data = {
             licenseId: data,
@@ -143,6 +143,8 @@ io.sockets.on('connection', (socket) => {
             licenseId: data,
             status: 2
         }
+
+        io.sockets.emit('SS_offline_player', data);
 
         // Send Email to owner to notify that the Electron Player is down.
         offlineNotification(offline_player);
@@ -192,9 +194,8 @@ io.sockets.on('connection', (socket) => {
                 status: 1
             }
 
+            io.sockets.emit('SS_offline_pi', disconnected_socket_license.licenseId);
             await offlineNotification(offline_player);
-
-            console.log('DISCONNECT', disconnected_socket_license.licenseId)
         } catch(err) {
             console.log(err)
         } 
@@ -225,7 +226,7 @@ const getSocketLicenseId = socket_id => {
     .then(function (response) {
         return response.data
     }).catch(function (error) {
-        console.log('Error', socketId);
+        console.log('Error', socket_id);
     });
 }
 
@@ -234,6 +235,6 @@ const offlineNotification = (data) => {
     .then(function (response) {
         console.log('Disconnected signal sent successfully', data);
     }).catch(function (error) {
-        console.log('Error', socketId);
+        console.log('Error', data);
     });
 }
