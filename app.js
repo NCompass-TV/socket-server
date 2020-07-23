@@ -107,6 +107,12 @@ io.sockets.on('connection', (socket) => {
         }
     })
 
+    // Remote Update
+    socket.on('D_system_update', async data => {
+        console.log(`Emitting Remote Update Signal to all Licenses`);
+        io.emit('SS_remote_update');
+    })
+
     //#################### Pi Events #################### 
 
     // Fresh Pi
@@ -205,7 +211,7 @@ io.sockets.on('connection', (socket) => {
 
 const appendSocketToLicense = (pi_data) => {
     axios.post('http://3.212.225.229:72/api/license/UpdateSocketIds', pi_data)
-    .then((res) => {
+    .then((res) => {    
         console.log('License Socket Updated: ', pi_data);
     }).catch((error) => {
         console.log('Error Updating Socket of License: ', error);
