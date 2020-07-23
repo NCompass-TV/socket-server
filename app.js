@@ -210,7 +210,7 @@ io.sockets.on('connection', (socket) => {
 
 
 const appendSocketToLicense = (pi_data) => {
-    axios.post('http://3.212.225.229:72/api/license/UpdateSocketIds', pi_data)
+    axios.post('http://3.212.225.229:82/api/license/UpdateSocketIds', pi_data)
     .then((res) => {    
         console.log('License Socket Updated: ', pi_data);
     }).catch((error) => {
@@ -219,7 +219,7 @@ const appendSocketToLicense = (pi_data) => {
 }
 
 const getLicenseSocketID = license_id => {
-    return axios.get(`http://3.212.225.229:72/api/license/GetSocketByLicense?licenseId=${license_id}`)
+    return axios.get(`http://3.212.225.229:82/api/license/GetSocketByLicense?licenseId=${license_id}`)
     .then((res) => {
         return res.data;
     }).catch((error) => {
@@ -228,7 +228,7 @@ const getLicenseSocketID = license_id => {
 }
 
 const getSocketLicenseId = socket_id => {
-    return axios.get(`http://3.212.225.229:72/api/License/GetByPiSocketId?socketid=${socket_id}`)
+    return axios.get(`http://3.212.225.229:82/api/License/GetByPiSocketId?socketid=${socket_id}`)
     .then(function (response) {
         return response.data
     }).catch(function (error) {
@@ -237,7 +237,7 @@ const getSocketLicenseId = socket_id => {
 }
 
 const offlineNotification = (data) => {
-    axios.post('http://3.212.225.229:72/api/notification/send', data)
+    axios.post('http://3.212.225.229:82/api/notification/send', data)
     .then(function (response) {
         console.log('Disconnected signal sent successfully', data);
     }).catch(function (error) {
