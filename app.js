@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const socket = require('socket.io');
 const PORT = process.env.PORT;
+const API_DEV = process.env.API_STAGING;
 const app = express();
 const axios = require('axios');
 let license_socket = [];
@@ -28,7 +29,6 @@ io.sockets.on('connection', (socket) => {
         console.log('CS_content_log', data);
         io.emit('SS_content_log', data);
     })
-
 
     //#################### Dashboard Events #################### 
 
@@ -119,6 +119,7 @@ io.sockets.on('connection', (socket) => {
     socket.on('PS_pi_license_saved', data => {
         console.log('PS_pi_license_saved', socket.id, data)
 
+        // Structure Data for License Socket ID Update
         socket_data = {
             licenseId: data,
             playerSocketId: '',
@@ -137,29 +138,55 @@ io.sockets.on('connection', (socket) => {
             licenseId: data,
             piSocketId: socket.id
         }
+
+        // Structure data for Pi and Player Status Update
+        const online_status = {
+            licenseId: data,
+            piStatus: 1,
+            playerStatus: 0
+        }
         
+        updateLicensePiandPlayerStatus(online_status);
         appendSocketToLicense(socket_data);
     })
 
     // Electron Player is not running
     socket.on('PS_electron_is_not_running', data => {
         console.log(`Electron Player for ${data} has stopped running, attempting to send email to Dealer`);
+
         const offline_player = {
             socketId: socket.id,
             licenseId: data,
             status: 2
         }
 
+        // Structure data for Pi and Player Status Update
+        const offline_status = {
+            licenseId: data,
+            piStatus: 1,
+            playerStatus: 0
+        }
+
         io.sockets.emit('SS_offline_player', data);
 
         // Send Email to owner to notify that the Electron Player is down.
         offlineNotification(offline_player);
+        // Change Status in DB
+        updateLicensePiandPlayerStatus(offline_status);
     })
 
     // Electron Player is running
     socket.on('PS_electron_is_running', data => {
         console.log('Electron Player is running with license id of', data);
         io.sockets.emit('SS_electron_is_running', data);
+
+        const online_status = {
+            licenseId: data,
+            piStatus: 1,
+            playerStatus: 1
+        }
+
+        updateLicensePiandPlayerStatus(online_status);
     })
 
     // Screenshot Failed
@@ -190,27 +217,41 @@ io.sockets.on('connection', (socket) => {
 
     // On Disconnect
     socket.on('disconnect', async () => {
-        console.log('A connection was destroyed', socket.id);
         try {
             const disconnected_socket_license = await getSocketLicenseId(socket.id);
 
-            const offline_player = {
-                socketId: socket.id,
-                licenseId: disconnected_socket_license.licenseId,
-                status: 1
-            }
 
-            io.sockets.emit('SS_offline_pi', disconnected_socket_license.licenseId);
-            await offlineNotification(offline_player);
+            if (disconnected_socket_license) {
+
+                // Structure data for Email Sending
+                const offline_player = {
+                    socketId: socket.id,
+                    licenseId: disconnected_socket_license.licenseId,
+                    status: 1
+                }
+
+                // Structure data for Pi and Player Status Update
+                const offline_status = {
+                    licenseId: disconnected_socket_license,
+                    piStatus: 0,
+                    playerStatus: 0
+                }
+    
+                io.sockets.emit('SS_offline_pi', disconnected_socket_license.licenseId);
+                console.log('A Pi connection was destroyed', socket.id);
+                await offlineNotification(offline_player);
+                await updateLicensePiandPlayerStatus(offline_status);
+            } else {
+                console.log('A dashboard session was destroyed', socket.id);
+            }
         } catch(err) {
             console.log(err)
         } 
     })
 })
 
-
 const appendSocketToLicense = (pi_data) => {
-    axios.post('http://3.212.225.229:72/api/license/UpdateSocketIds', pi_data)
+    axios.post(`${API_DEV}/license/UpdateSocketIds`, pi_data)
     .then((res) => {    
         console.log('License Socket Updated: ', pi_data);
     }).catch((error) => {
@@ -219,7 +260,7 @@ const appendSocketToLicense = (pi_data) => {
 }
 
 const getLicenseSocketID = license_id => {
-    return axios.get(`http://3.212.225.229:72/api/license/GetSocketByLicense?licenseId=${license_id}`)
+    return axios.get(`${API_DEV}/license/GetSocketByLicense?licenseId=${license_id}`)
     .then((res) => {
         return res.data;
     }).catch((error) => {
@@ -228,7 +269,7 @@ const getLicenseSocketID = license_id => {
 }
 
 const getSocketLicenseId = socket_id => {
-    return axios.get(`http://3.212.225.229:72/api/License/GetByPiSocketId?socketid=${socket_id}`)
+    return axios.get(`${API_DEV}/License/GetByPiSocketId?socketid=${socket_id}`)
     .then(function (response) {
         return response.data
     }).catch(function (error) {
@@ -237,10 +278,19 @@ const getSocketLicenseId = socket_id => {
 }
 
 const offlineNotification = (data) => {
-    axios.post('http://3.212.225.229:72/api/notification/send', data)
+    axios.post(`${API_DEV}/notification/send`, data)
     .then(function (response) {
         console.log('Disconnected signal sent successfully', data);
     }).catch(function (error) {
         console.log('Error', data);
     });
+}
+
+const updateLicensePiandPlayerStatus = (data) => {
+    axios.post(`${API_DEV}/license/UpdatePiPlayerStatus`, data)
+    .then(res => {
+        console.log('Status successfully updated', res.status);
+    }).catch(err => {
+        console.log('Error Updating Player and Pi Status', err)
+    })
 }
