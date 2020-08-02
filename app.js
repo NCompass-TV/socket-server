@@ -111,7 +111,13 @@ io.sockets.on('connection', (socket) => {
     socket.on('D_system_update', async data => {
         console.log(`Emitting Remote Update Signal to all Licenses`);
         io.emit('SS_remote_update');
-    })
+	})
+	
+	// Anydesk ID
+	socket.on('D_anydesk_id', async data => {
+		console.log(`Emitting GetAnydeskID Event`, data);
+		io.emit('SS_anydesk_id', data);
+	})
 
     //#################### Pi Events #################### 
 
@@ -139,7 +145,7 @@ io.sockets.on('connection', (socket) => {
         }
         
         appendSocketToLicense(socket_data);
-    })
+	})
 
     // Electron Player is not running
     socket.on('PS_electron_is_not_running', data => {
@@ -184,7 +190,12 @@ io.sockets.on('connection', (socket) => {
     socket.on('PS_logs_sent', data => {
         console.log('LOGS SAVED TO API SERVER DATABASE', data);
         io.sockets.emit('SS_logs_sent', data);
-    })
+	})
+	
+	socket.on('PS_anydesk_id', data => {
+		console.log('Anydesk ID fetched succesfully', data);
+		io.sockets.emit('SS_anydesk_id_result', data);
+	})
 
     //#################### Disconnected #################### 
 
