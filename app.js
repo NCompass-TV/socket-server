@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const socket = require('socket.io');
 const PORT = process.env.PORT;
-const API_STAGING = process.env.API_STAGING;
+const API_PROD = process.env.API_PROD;
 const app = express();
 const axios = require('axios');
 let license_socket = [];
@@ -262,7 +262,7 @@ io.sockets.on('connection', (socket) => {
 })
 
 const appendSocketToLicense = (pi_data) => {
-    axios.post(`${API_STAGING}/license/UpdateSocketIds`, pi_data)
+    axios.post(`${API_PROD}/license/UpdateSocketIds`, pi_data)
     .then((res) => {    
         console.log('License Socket Updated: ', pi_data);
     }).catch((error) => {
@@ -271,7 +271,7 @@ const appendSocketToLicense = (pi_data) => {
 }
 
 const getLicenseSocketID = license_id => {
-    return axios.get(`${API_STAGING}/license/GetSocketByLicense?licenseId=${license_id}`)
+    return axios.get(`${API_PROD}/license/GetSocketByLicense?licenseId=${license_id}`)
     .then((res) => {
         return res.data;
     }).catch((error) => {
@@ -280,7 +280,7 @@ const getLicenseSocketID = license_id => {
 }
 
 const getSocketLicenseId = socket_id => {
-    return axios.get(`${API_STAGING}/License/GetByPiSocketId?socketid=${socket_id}`)
+    return axios.get(`${API_PROD}/License/GetByPiSocketId?socketid=${socket_id}`)
     .then(function (response) {
         return response.data
     }).catch(function (error) {
@@ -289,7 +289,7 @@ const getSocketLicenseId = socket_id => {
 }
 
 const offlineNotification = (data) => {
-    axios.post(`${API_STAGING}/notification/send`, data)
+    axios.post(`${API_PROD}/notification/send`, data)
     .then(function (response) {
         console.log('Disconnected signal sent successfully', data);
     }).catch(function (error) {
@@ -298,7 +298,7 @@ const offlineNotification = (data) => {
 }
 
 const updateLicensePiandPlayerStatus = (data) => {
-    axios.post(`${API_STAGING}/license/UpdatePiPlayerStatus`, data)
+    axios.post(`${API_PROD}/license/UpdatePiPlayerStatus`, data)
     .then(res => {
         console.log('Status successfully updated', res.status);
     }).catch(err => {
