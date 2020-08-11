@@ -26,7 +26,7 @@ io.sockets.on('connection', (socket) => {
     
     //#################### Consumer Events #################### 
     socket.on('CS_content_log', data => {
-        console.log('CS_content_log', data);
+        // console.log('CS_content_log', data);
         io.emit('SS_content_log', data);
     })
 
