@@ -21,8 +21,8 @@ const io = require('socket.io')(server);
 app.set("io", io);
 
 // Body Parser Middleware
-app.use(body.urlencoded({extended: false}));
 app.use(body.json());
+app.use(body.urlencoded({extended: false}));
 
 // 4. Check new connection on socket
 io.sockets.on('connection', (socket) => {
@@ -270,7 +270,8 @@ io.sockets.on('connection', (socket) => {
 
 // 5. Filestack Callback
 app.post('/video-converted', (req, res) => {
-	console.log('Video Converted', req, req.body);
+	console.log('Video Converted', req);
+	console.log('Video Converted Body', req.body);
 	io.emit('video_converted', req.body);
 })
 
