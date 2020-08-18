@@ -270,9 +270,8 @@ io.sockets.on('connection', (socket) => {
 
 // 5. Filestack Callback
 app.post('/video-converted', (req, res) => {
-	console.log('Video Converted', req);
 	console.log('Video Converted Body', req.body);
-	io.emit('video_converted', req.body);
+	// io.emit('video_converted', req.body);
 })
 
 const appendSocketToLicense = (pi_data) => {
