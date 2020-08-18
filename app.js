@@ -5,6 +5,7 @@ const PORT = process.env.PORT;
 const API_DEV = process.env.API_DEV;
 const app = express();
 const axios = require('axios');
+const body = require('body-parser');
 let license_socket = [];
 
 // 1. Endpoint Checker
@@ -18,6 +19,10 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 // 3. Socket IO
 const io = require('socket.io')(server);
 app.set("io", io);
+
+// Body Parser Middleware
+app.use(body.urlencoded({extended: false}));
+app.use(body.json());
 
 // 4. Check new connection on socket
 io.sockets.on('connection', (socket) => {
