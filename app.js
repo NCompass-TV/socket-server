@@ -5,6 +5,7 @@ const PORT = process.env.PORT;
 const API_DEV = process.env.API_DEV;
 const app = express();
 const axios = require('axios');
+const body = require('body-parser');
 let license_socket = [];
 
 // 1. Endpoint Checker
@@ -18,6 +19,10 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 // 3. Socket IO
 const io = require('socket.io')(server);
 app.set("io", io);
+
+// Body Parser Middleware
+app.use(body.json());
+app.use(body.urlencoded({extended: false}));
 
 // 4. Check new connection on socket
 io.sockets.on('connection', (socket) => {
@@ -265,7 +270,8 @@ io.sockets.on('connection', (socket) => {
 
 // 5. Filestack Callback
 app.post('/video-converted', (req, res) => {
-	console.log('Video Converted', req, req.body);
+	console.log('Video Converted', req);
+	console.log('Video Converted Body', req.body);
 	io.emit('video_converted', req.body);
 })
 
