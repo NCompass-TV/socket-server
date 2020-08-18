@@ -263,6 +263,12 @@ io.sockets.on('connection', (socket) => {
     })
 })
 
+// 5. Filestack Callback
+app.post('/video-converted', (req, res) => {
+	console.log('Video Converted', req.body);
+	io.emit('video_converted', req.body);
+})
+
 const appendSocketToLicense = (pi_data) => {
     axios.post(`${API_DEV}/license/UpdateSocketIds`, pi_data)
     .then((res) => {    
