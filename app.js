@@ -265,7 +265,7 @@ io.sockets.on('connection', (socket) => {
 
 // 5. Filestack Callback
 app.post('/video-converted', (req, res) => {
-	console.log('Video Converted', req.body);
+	console.log('Video Converted', req, req.body);
 	io.emit('video_converted', req.body);
 })
 
