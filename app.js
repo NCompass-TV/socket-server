@@ -26,7 +26,7 @@ io.sockets.on('connection', (socket) => {
     
     //#################### Consumer Events #################### 
     socket.on('CS_content_log', data => {
-        console.log('CS_content_log', data);
+        // console.log('CS_content_log', data);
         io.emit('SS_content_log', data);
     })
 
@@ -38,8 +38,10 @@ io.sockets.on('connection', (socket) => {
         try {
             const lic_data = await getLicenseSocketID(data);
             if (io.sockets.connected[lic_data.piSocketId] != undefined) {
+				console.log('IS RUNNING', data)
                 io.to(lic_data.piSocketId).emit('SS_is_electron_running', data);
             } else {
+				console.log('NOT RUNNING', data);
                 io.emit('SS_license_is_offline', data);
             }
         } catch(err) {
@@ -259,6 +261,12 @@ io.sockets.on('connection', (socket) => {
             console.log(err)
         } 
     })
+})
+
+// 5. Filestack Callback
+app.post('/video-converted', (req, res) => {
+	console.log('Video Converted', req.body);
+	io.emit('video_converted', req.body);
 })
 
 const appendSocketToLicense = (pi_data) => {
