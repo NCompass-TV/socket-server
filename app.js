@@ -269,9 +269,14 @@ io.sockets.on('connection', (socket) => {
 })
 
 // 5. Filestack Callback
-app.post('/video-converted', (req, res) => {
-	console.log('Video Converted Body', req.body);
-	io.sockets.emit('video_converted', req.body.uuid);
+app.post('/video-converted', async (req, res) => {
+	try {
+		console.log('Video Converted Body', req.body);
+		await updateConvertedVideo(req.body.uuid);
+		io.sockets.emit('video_converted', req.body.uuid);
+	} catch(err) {
+		console.log(err);
+	}
 })
 
 const appendSocketToLicense = (pi_data) => {
@@ -316,5 +321,14 @@ const updateLicensePiandPlayerStatus = (data) => {
         console.log('Status successfully updated', res.status);
     }).catch(err => {
         console.log('Error Updating Player and Pi Status', err)
+    })
+}
+
+const updateConvertedVideo = (data) => {
+	axios.post(`${API_DEV}/Content/UpdateContentsIsConverted?uuid=${data}`)
+    .then(res => {
+        console.log('Content is_converted updated', res.status, data);
+    }).catch(err => {
+        console.log('Error Updating converted status', err)
     })
 }
