@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const socket = require('socket.io');
 const PORT = process.env.PORT;
-const API_URL = process.env.API_DEV;
+const API_URL = process.env.API_TEST;
 const app = express();
 const axios = require('axios');
 const body = require('body-parser');
