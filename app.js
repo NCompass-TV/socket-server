@@ -2,9 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const socket = require('socket.io');
 const PORT = process.env.PORT;
-const API_STAGING = process.env.API_STAGING;
+const API_URL = process.env.API_STAGING;
 const app = express();
 const axios = require('axios');
+const body = require('body-parser');
 let license_socket = [];
 
 // 1. Endpoint Checker
@@ -19,6 +20,10 @@ const server = app.listen(PORT, '0.0.0.0', () => {
 const io = require('socket.io')(server);
 app.set("io", io);
 
+// Body Parser Middleware
+app.use(body.json());
+app.use(body.urlencoded({extended: false}));
+
 // 4. Check new connection on socket
 io.sockets.on('connection', (socket) => {
     // Connection Established
@@ -26,7 +31,7 @@ io.sockets.on('connection', (socket) => {
     
     //#################### Consumer Events #################### 
     socket.on('CS_content_log', data => {
-        console.log('CS_content_log', data);
+        // console.log('CS_content_log', data);
         io.emit('SS_content_log', data);
     })
 
@@ -38,8 +43,10 @@ io.sockets.on('connection', (socket) => {
         try {
             const lic_data = await getLicenseSocketID(data);
             if (io.sockets.connected[lic_data.piSocketId] != undefined) {
+				console.log('IS RUNNING', data)
                 io.to(lic_data.piSocketId).emit('SS_is_electron_running', data);
             } else {
+				console.log('NOT RUNNING', data);
                 io.emit('SS_license_is_offline', data);
             }
         } catch(err) {
@@ -261,9 +268,20 @@ io.sockets.on('connection', (socket) => {
     })
 })
 
+// 5. Filestack Callback
+app.post('/video-converted', async (req, res) => {
+	try {
+		console.log('Video Converted Body', req.body);
+		await updateConvertedVideo(req.body.uuid);
+		io.sockets.emit('video_converted', req.body.uuid);
+	} catch(err) {
+		console.log(err);
+	}
+})
+
 const appendSocketToLicense = (pi_data) => {
-    axios.post(`${API_STAGING}/license/UpdateSocketIds`, pi_data)
-    .then((res) => {    
+    axios.post(`${API_URL}/license/UpdateSocketIds`, pi_data)
+    .then((res) => {
         console.log('License Socket Updated: ', pi_data);
     }).catch((error) => {
         console.log('Error Updating Socket of License: ', error);
@@ -271,7 +289,7 @@ const appendSocketToLicense = (pi_data) => {
 }
 
 const getLicenseSocketID = license_id => {
-    return axios.get(`${API_STAGING}/license/GetSocketByLicense?licenseId=${license_id}`)
+    return axios.get(`${API_URL}/license/GetSocketByLicense?licenseId=${license_id}`)
     .then((res) => {
         return res.data;
     }).catch((error) => {
@@ -280,7 +298,7 @@ const getLicenseSocketID = license_id => {
 }
 
 const getSocketLicenseId = socket_id => {
-    return axios.get(`${API_STAGING}/License/GetByPiSocketId?socketid=${socket_id}`)
+    return axios.get(`${API_URL}/License/GetByPiSocketId?socketid=${socket_id}`)
     .then(function (response) {
         return response.data
     }).catch(function (error) {
@@ -289,7 +307,7 @@ const getSocketLicenseId = socket_id => {
 }
 
 const offlineNotification = (data) => {
-    axios.post(`${API_STAGING}/notification/send`, data)
+    axios.post(`${API_URL}/notification/send`, data)
     .then(function (response) {
         console.log('Disconnected signal sent successfully', data);
     }).catch(function (error) {
@@ -298,10 +316,19 @@ const offlineNotification = (data) => {
 }
 
 const updateLicensePiandPlayerStatus = (data) => {
-    axios.post(`${API_STAGING}/license/UpdatePiPlayerStatus`, data)
+    axios.post(`${API_URL}/license/UpdatePiPlayerStatus`, data)
     .then(res => {
         console.log('Status successfully updated', res.status);
     }).catch(err => {
         console.log('Error Updating Player and Pi Status', err)
+    })
+}
+
+const updateConvertedVideo = (data) => {
+	axios.post(`${API_URL}/Content/UpdateContentsIsConverted?uuid=${data}`)
+    .then(res => {
+        console.log('Content is_converted updated', res.status, data);
+    }).catch(err => {
+        console.log('Error Updating converted status', err)
     })
 }
