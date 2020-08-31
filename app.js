@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const socket = require('socket.io');
 const PORT = process.env.PORT;
-const API_DEV = process.env.API_DEV;
+const API_URL = process.env.API_DEV;
 const app = express();
 const axios = require('axios');
 const body = require('body-parser');
@@ -280,7 +280,7 @@ app.post('/video-converted', async (req, res) => {
 })
 
 const appendSocketToLicense = (pi_data) => {
-    axios.post(`${API_DEV}/license/UpdateSocketIds`, pi_data)
+    axios.post(`${API_URL}/license/UpdateSocketIds`, pi_data)
     .then((res) => {
         console.log('License Socket Updated: ', pi_data);
     }).catch((error) => {
@@ -289,7 +289,7 @@ const appendSocketToLicense = (pi_data) => {
 }
 
 const getLicenseSocketID = license_id => {
-    return axios.get(`${API_DEV}/license/GetSocketByLicense?licenseId=${license_id}`)
+    return axios.get(`${API_URL}/license/GetSocketByLicense?licenseId=${license_id}`)
     .then((res) => {
         return res.data;
     }).catch((error) => {
@@ -298,7 +298,7 @@ const getLicenseSocketID = license_id => {
 }
 
 const getSocketLicenseId = socket_id => {
-    return axios.get(`${API_DEV}/License/GetByPiSocketId?socketid=${socket_id}`)
+    return axios.get(`${API_URL}/License/GetByPiSocketId?socketid=${socket_id}`)
     .then(function (response) {
         return response.data
     }).catch(function (error) {
@@ -307,7 +307,7 @@ const getSocketLicenseId = socket_id => {
 }
 
 const offlineNotification = (data) => {
-    axios.post(`${API_DEV}/notification/send`, data)
+    axios.post(`${API_URL}/notification/send`, data)
     .then(function (response) {
         console.log('Disconnected signal sent successfully', data);
     }).catch(function (error) {
@@ -316,7 +316,7 @@ const offlineNotification = (data) => {
 }
 
 const updateLicensePiandPlayerStatus = (data) => {
-    axios.post(`${API_DEV}/license/UpdatePiPlayerStatus`, data)
+    axios.post(`${API_URL}/license/UpdatePiPlayerStatus`, data)
     .then(res => {
         console.log('Status successfully updated', res.status);
     }).catch(err => {
@@ -325,7 +325,7 @@ const updateLicensePiandPlayerStatus = (data) => {
 }
 
 const updateConvertedVideo = (data) => {
-	axios.post(`${API_DEV}/Content/UpdateContentsIsConverted?uuid=${data}`)
+	axios.post(`${API_URL}/Content/UpdateContentsIsConverted?uuid=${data}`)
     .then(res => {
         console.log('Content is_converted updated', res.status, data);
     }).catch(err => {
