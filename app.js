@@ -281,7 +281,7 @@ app.post('/video-converted', async (req, res) => {
 
 const appendSocketToLicense = (pi_data) => {
     axios.post(`${API_DEV}/license/UpdateSocketIds`, pi_data)
-    .then((res) => {    
+    .then((res) => {
         console.log('License Socket Updated: ', pi_data);
     }).catch((error) => {
         console.log('Error Updating Socket of License: ', error);
