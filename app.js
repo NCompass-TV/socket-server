@@ -23,8 +23,8 @@ const io = require('socket.io')(server);
 app.set("io", io);
 
 // Body Parser Middleware
-app.use(body.json());
-app.use(body.urlencoded({extended: false}));
+app.use(express.json({limit: '50mb', extended: true}));
+app.use(express.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 
 // Socket Modules
 require('./lib/sockets/socket-server')(io);
