@@ -15,6 +15,7 @@ export enum SOCKET_EVENTS {
     refetch = "SS_launch_refetch",
     reset = "SS_launch_reset", 
     restart = "SS_pi_restart",
+    restart_anydesk = "SS_restart_anydesk",
     screenshot = "SS_launch_screenshot",
     screenshot_failed = "SS_screenshot_failed",
     screenshot_success = "SS_screenshot_success",
@@ -30,6 +31,7 @@ export enum DASHBOARD_SOCKET_EVENTS {
     refetch = "D_refetch_pi", 
     reset = "D_reset_pi", 
     restart = "D_pi_restart",
+    restart_anydesk = "D_restart_anydesk",
     screenshot = "D_screenshot_pi",
     system_update_all = "D_system_udpate",
     system_update_by_license = "SS_remote_update_by_license"

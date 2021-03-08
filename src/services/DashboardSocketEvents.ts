@@ -17,12 +17,13 @@ export class DashboardSocketEvents {
         this.io = io;
         this.socket = socket;
         this.onAnydeskRequest();
+        this.onAnydeskRestart();
         this.onElectronCheck();
         this.onPiRestart();
+        this.onRebootAll();
         this.onRefetchPlayerData();
         this.onResetPlayer();
         this.onScreenshot();
-        this.onRebootAll();
         this.onSystemUpdate();
         this.onSystemUpdateByLicense();
         this.onUpdatePlayer();
@@ -32,6 +33,18 @@ export class DashboardSocketEvents {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.anydesk, (data: any) => {
             this.io.emit(SOCKET_EVENTS.anydesk, data);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard Anydesk Request signal sent to license: ${data}`);
+        })
+    }
+
+    onAnydeskRestart() {
+        this.socket.on(DASHBOARD_SOCKET_EVENTS.restart_anydesk, async (data: any) => {
+            const res: any = await new GetLicenseSocketId().invoke(data);
+            if (this.io.sockets.connected[res.piSocketId] !== undefined) {
+                this.io.to(res.piSocketId).emit(SOCKET_EVENTS.restart_anydesk, data);
+                new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart Anydesk signal sent to license: ${res.licenseId}`);
+            } else {
+                this.io.emit(SOCKET_EVENTS.offline_license, data);
+            }
         })
     }
 
@@ -51,6 +64,13 @@ export class DashboardSocketEvents {
 		this.socket.on(DASHBOARD_SOCKET_EVENTS.restart, (data: any) => {
             this.io.emit(SOCKET_EVENTS.restart, data);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart signal sent to license: ${data}`);
+        })
+    }
+
+    onRebootAll() {
+        this.socket.on(DASHBOARD_SOCKET_EVENTS.reboot_all, () => {
+            this.io.emit(SOCKET_EVENTS.reboot_all);
+            new ActivityLogger(LOG_TYPES.success, `__Dashboard Reboot signal sent to all licenses`);
         })
     }
 
@@ -95,13 +115,6 @@ export class DashboardSocketEvents {
             } else {
                 this.io.emit(SOCKET_EVENTS.offline_license, data);
             }
-        })
-    }
-
-    onRebootAll() {
-        this.socket.on(DASHBOARD_SOCKET_EVENTS.reboot_all, () => {
-            this.io.emit(SOCKET_EVENTS.reboot_all);
-            new ActivityLogger(LOG_TYPES.success, `__Dashboard Reboot signal sent to all licenses`);
         })
     }
 
