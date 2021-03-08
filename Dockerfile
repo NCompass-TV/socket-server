@@ -14,7 +14,7 @@ RUN npm run install-prod
 RUN ls
 
 # Add the rest of the sources
-ADD bundle/. /app
+COPY /app/bundle/. /app
 
 EXPOSE 3000
 
