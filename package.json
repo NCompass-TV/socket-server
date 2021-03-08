@@ -9,7 +9,7 @@
     "build-prod": "tsc -p . && gulp bundleJS",
     "required-files": "cp ./package.json ./bundle && cp ./package-lock.json ./bundle && cp ./.env ./bundle",
     "install-prod": "npm install --production --prefix ./bundle",
-    "copy-prod": "./bundle/. ."
+    "copy-prod": "cp ./bundle/. ."
   },
   "repository": {
     "type": "git",
