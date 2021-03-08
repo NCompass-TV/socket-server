@@ -2,6 +2,9 @@
 FROM node:12-alpine
 
 # WORKDIR /app
+RUN ls
+WORKDIR .
+RUN ls
 
 # Only run npm install if these files change.
 # ADD ./package.json /app/package.json
