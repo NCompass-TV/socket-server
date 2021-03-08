@@ -13,6 +13,7 @@ RUN npm run install-prod
 RUN npm run copy-prod
 
 ADD . /app
+RUN ls /app/src
 
 EXPOSE 3000
 
