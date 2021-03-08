@@ -7,8 +7,9 @@
     "dev": "nodemon ./src/app.ts",
     "start": "node ./src/app.js",
     "build-prod": "tsc -p . && gulp bundleJS",
-    "required-files": "cp ./package.json ./app && cp ./package-lock.json ./app && cp ./.env ./app",
-    "install-prod": "npm install --production --prefix ./app/."
+    "required-files": "cp ./package.json ./bundle && cp ./package-lock.json ./bundle && cp ./.env ./bundle",
+    "install-prod": "npm install --production --prefix ./bundle",
+    "copy-prod": "./bundle/. ."
   },
   "repository": {
     "type": "git",

@@ -1,9 +1,9 @@
 #Latest version of node tested on.
 FROM node:12-alpine
 
-WORKDIR /tempbuild
+WORKDIR /app
 
-ADD . /tempbuild
+ADD . /app
 
 # Install dependencies
 RUN npm install
@@ -12,15 +12,15 @@ RUN npm run required-files
 RUN npm run install-prod
 
 RUN ls
-RUN ls /tempbuild/bundle/.
+
+RUN npm run copy-prod
+
+RUN ls
 
 # Add the rest of the sources
 #RUN copy /tempbuild/bundle/. /app
 
-WORKDIR /app
-
-RUN ls
-RUN ls /tempbuild/bundle/.
+ADD . /app
 
 EXPOSE 3000
 
