@@ -19,7 +19,7 @@ WORKDIR /app
 
 COPY --from=build /app/bundle .
 
-RUN ls
+RUN ls src
 
 EXPOSE 3000
 CMD ["npm","start"]
