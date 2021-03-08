@@ -1,9 +1,7 @@
 #Latest version of node tested on.
 FROM node:12-alpine
 
-# WORKDIR /app
-RUN ls
-WORKDIR .
+WORKDIR /app
 RUN ls
 
 # Only run npm install if these files change.
