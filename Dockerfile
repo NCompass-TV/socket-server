@@ -12,7 +12,7 @@ RUN npm run required-files
 RUN npm run install-prod
 
 # Add the rest of the sources
-COPY ./tempbuild/bundle/. /app
+ADD ./tempbuild/bundle/. /app
 
 EXPOSE 3000
 
