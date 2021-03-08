@@ -9,6 +9,8 @@ ADD ./tsconfig.json /tempbuild/tsconfig.json
 # Only run npm install if these files change.
 # ADD ./package.json /app/package.json
 
+RUN touch test.ts
+
 # Install dependencies
 RUN npm install
 RUN npm run build-prod
