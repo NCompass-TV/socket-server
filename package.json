@@ -8,7 +8,7 @@
     "start": "node ./src/app.js",
     "build-prod": "tsc -p . && gulp bundleJS",
     "required-files": "cp ./package.json ./app && cp ./package-lock.json ./app && cp ./.env ./app",
-    "install-prod": "npm install --production --prefix ./app"
+    "install-prod": "npm install --production --prefix ./app/."
   },
   "repository": {
     "type": "git",
