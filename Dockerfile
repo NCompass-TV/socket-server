@@ -5,6 +5,7 @@ WORKDIR /app
 
 # Only run npm install if these files change.
 ADD ./package.json /app/package.json
+ADD ./tsconfig.json /app/tsconfig.json
 
 # Install dependencies
 RUN npm install
