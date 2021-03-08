@@ -23,6 +23,8 @@ RUN ls
 
 ADD . /app
 
+RUN ls app
+
 EXPOSE 3000
 
 CMD ["npm","start"]
