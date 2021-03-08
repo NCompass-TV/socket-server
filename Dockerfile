@@ -12,9 +12,10 @@ RUN npm run required-files
 RUN npm run install-prod
 
 RUN ls
+RUN ls bundle
 
 # Add the rest of the sources
-COPY /app/bundle/. /app
+ADD /app/bundle/. /app
 
 EXPOSE 3000
 
