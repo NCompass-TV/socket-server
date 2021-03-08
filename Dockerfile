@@ -15,7 +15,7 @@ RUN ls
 RUN ls bundle
 
 # Add the rest of the sources
-RUN cp /tempbuild/bundle. /app
+RUN cp /tempbuild/bundle/. /app
 
 EXPOSE 3000
 
