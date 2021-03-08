@@ -15,7 +15,7 @@ RUN ls
 RUN ls bundle
 
 # Add the rest of the sources
-ADD /app/bundle/. /app
+ADD bundle /app
 
 EXPOSE 3000
 
