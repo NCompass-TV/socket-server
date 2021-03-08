@@ -17,7 +17,7 @@ FROM node:12-alpine
 
 WORKDIR /app
 
-ADD --from=build /app/build .
+COPY --from=build /app/bundle .
 
 RUN ls
 
