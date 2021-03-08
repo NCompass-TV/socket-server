@@ -9,14 +9,11 @@ WORKDIR /app
 # Install dependencies
 RUN npm install
 RUN npm build-prod
-ADD ./bundle/. /app
-COPY ./package.json /app
-COPY ./package-lock.json /app
-COPY ./.env /app
-RUN npm install --production
+RUN npm required-files
+RUN npm install-prod
 
 # Add the rest of the sources
-# ADD . /app
+ADD ./bundle/. /app
 
 EXPOSE 3000
 

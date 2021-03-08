@@ -5,8 +5,10 @@
   "main": "app.js",
   "scripts": {
     "dev": "nodemon ./src/app.ts",
-    "start": "node ./src/app.js", 
-    "build-prod": "tsc -p . && gulp bundleJS"
+    "start": "node ./src/app.js",
+    "build-prod": "tsc -p . && gulp bundleJS",
+    "required-files": "cp ./package.json ./bundle && cp ./package-lock.json ./bundle && cp ./.env ./bundle",
+    "install-prod": "npm install --production --prefix ./bundle"
   },
   "repository": {
     "type": "git",
