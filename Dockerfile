@@ -20,6 +20,7 @@ RUN ls /tempbuild/bundle/.
 WORKDIR /app
 
 RUN ls
+RUN ls /tempbuild/bundle/.
 
 EXPOSE 3000
 
