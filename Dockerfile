@@ -1,7 +1,7 @@
 #Latest version of node tested on.
 FROM node:12-alpine
 
-WORKDIR /app
+# WORKDIR /app
 
 # Only run npm install if these files change.
 ADD ./package.json /app/package.json
