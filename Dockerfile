@@ -23,7 +23,7 @@ RUN ls
 
 ADD . /app
 
-RUN ls app
+RUN ls /app
 
 EXPOSE 3000
 
