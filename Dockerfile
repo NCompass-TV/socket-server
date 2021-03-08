@@ -3,13 +3,7 @@ FROM node:12-alpine
 
 WORKDIR /tempbuild
 
-ADD ./package.json /tempbuild/package.json
-ADD ./tsconfig.json /tempbuild/tsconfig.json
-
-# Only run npm install if these files change.
-# ADD ./package.json /app/package.json
-
-RUN touch test.ts
+ADD . /tempbuild
 
 # Install dependencies
 RUN npm install
