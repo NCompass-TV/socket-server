@@ -17,6 +17,8 @@ RUN ls /tempbuild/bundle/.
 # Add the rest of the sources
 #RUN copy /tempbuild/bundle/. /app
 
+RUN ls /app
+
 EXPOSE 3000
 
 CMD ["npm","start"]
