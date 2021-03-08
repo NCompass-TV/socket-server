@@ -12,6 +12,7 @@ RUN npm run required-files
 RUN npm run install-prod
 
 RUN ls
+RUN ls bundle
 
 RUN npm run copy-prod
 
