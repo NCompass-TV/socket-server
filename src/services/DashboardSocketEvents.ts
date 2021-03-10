@@ -39,7 +39,7 @@ export class DashboardSocketEvents {
     onAnydeskRestart() {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.restart_anydesk, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
-            if (this.io.sockets.connected[res.piSocketId] !== undefined) {
+            if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
                 this.io.to(res.piSocketId).emit(SOCKET_EVENTS.restart_anydesk, data);
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart Anydesk signal sent to license: ${res.licenseId}`);
             } else {
@@ -51,7 +51,7 @@ export class DashboardSocketEvents {
     onElectronCheck() {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.electron, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
-            if (this.io.sockets.connected[res.piSocketId] !== undefined) {
+            if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
                 this.io.to(res.piSocketId).emit(SOCKET_EVENTS.electron, data);
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Electron Check signal sent to license: ${res.licenseId}`);
             } else {
@@ -77,7 +77,7 @@ export class DashboardSocketEvents {
     onRefetchPlayerData() {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.refetch, async (data) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
-            if (this.io.sockets.connected[res.piSocketId] !== undefined) {
+            if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
                 this.io.to(res.piSocketId).emit(SOCKET_EVENTS.refetch, res.licenseId);
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Refetch Update signal sent to license: ${res.licenseId}`);
             } else {
@@ -89,7 +89,7 @@ export class DashboardSocketEvents {
     onResetPlayer() {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.reset, async (data) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
-            if (this.io.sockets.connected[res.piSocketId] !== undefined) {
+            if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
                 this.io.to(res.piSocketId).emit(SOCKET_EVENTS.reset, data);
                 this.io.sockets.emit(SOCKET_EVENTS.offline_pi, res.licenseId);
 
@@ -109,7 +109,7 @@ export class DashboardSocketEvents {
     onScreenshot() {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.screenshot, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
-            if (this.io.sockets.connected[res.piSocketId] !== undefined) {
+            if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
                 this.io.to(res.piSocketId).emit(SOCKET_EVENTS.screenshot, data);
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Screenshot signal sent to license: ${res.licenseId}`);
             } else {
@@ -135,7 +135,7 @@ export class DashboardSocketEvents {
     onUpdatePlayer() {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.content, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data)
-            if (this.io.sockets.connected[res.piSocketId] !== undefined) {
+            if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
                 this.io.to(res.piSocketId).emit(SOCKET_EVENTS.content, data);
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Content Update signal sent to ${data}`);
             } else {

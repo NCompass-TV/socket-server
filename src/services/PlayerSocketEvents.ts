@@ -30,6 +30,7 @@ export class PlayerSocketEvents {
         this.onOnlinePi();
         this.onScreenshotFailed();
         this.onScreenshotUploaded();
+        this.onUpdateFinished();
     }
 
     onAnydeskRequest() {
@@ -126,7 +127,16 @@ export class PlayerSocketEvents {
         this.socket.on(PLAYER_SOCKET_EVENTS.screenshot_uplaoded, data => {
             if (data && data.license_id) {
                 this.io.sockets.emit(SOCKET_EVENTS.screenshot_success, data.license_id);
-                new ActivityLogger(LOG_TYPES.warning, `__Player Screenshot Success: ${data.license_id}`);
+                new ActivityLogger(LOG_TYPES.success, `__Player Screenshot Success: ${data.license_id}`);
+            }
+        })
+    }
+
+    onUpdateFinished() {
+        this.socket.on(PLAYER_SOCKET_EVENTS.update_finish, data => {
+            if (data) {
+                this.io.sockets.emit(SOCKET_EVENTS.content_update_success, data)
+                new ActivityLogger(LOG_TYPES.success, `__Player Content Update Success: ${data}`)
             }
         })
     }
