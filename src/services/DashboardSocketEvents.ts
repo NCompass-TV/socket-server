@@ -24,6 +24,7 @@ export class DashboardSocketEvents {
         this.onRefetchPlayerData();
         this.onResetPlayer();
         this.onScreenshot();
+        this.onSpeedTest();
         this.onSystemUpdate();
         this.onSystemUpdateByLicense();
         this.onUpdatePlayer();
@@ -112,6 +113,18 @@ export class DashboardSocketEvents {
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
                 this.io.to(res.piSocketId).emit(SOCKET_EVENTS.screenshot, data);
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Screenshot signal sent to license: ${res.licenseId}`);
+            } else {
+                this.io.emit(SOCKET_EVENTS.offline_license, data);
+            }
+        })
+    }
+
+    onSpeedTest() {
+        this.socket.on(DASHBOARD_SOCKET_EVENTS.speed_test, async(data) => {
+            const res: any = await new GetLicenseSocketId().invoke(data);
+            if (res && this.io.sockets.connected[res.PiSocketId] !== undefined) {
+                this.io.to(res.piSocketyId).emit(SOCKET_EVENTS.speed_test, data);
+                new ActivityLogger(LOG_TYPES.success, `__Dashboard Speed Test signal sent to license: ${res.licenseId}`);
             } else {
                 this.io.emit(SOCKET_EVENTS.offline_license, data);
             }

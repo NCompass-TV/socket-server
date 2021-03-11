@@ -30,6 +30,8 @@ export class PlayerSocketEvents {
         this.onOnlinePi();
         this.onScreenshotFailed();
         this.onScreenshotUploaded();
+        this.onSpeedTestFailed();
+        this.onSpeedTestFailed();
         this.onUpdateFinished();
     }
 
@@ -128,6 +130,24 @@ export class PlayerSocketEvents {
             if (data && data.license_id) {
                 this.io.sockets.emit(SOCKET_EVENTS.screenshot_success, data.license_id);
                 new ActivityLogger(LOG_TYPES.success, `__Player Screenshot Success: ${data.license_id}`);
+            }
+        })
+    }
+
+    onSpeedTestSuccess() {
+        this.socket.on(PLAYER_SOCKET_EVENTS.speed_test_success, data => {
+            if (data && data.license_id) {
+                this.io.sockets.emit(SOCKET_EVENTS.speed_test_success, data);
+                new ActivityLogger(LOG_TYPES.success, `__Player SpeedTest Success: ${data.license_id}`);
+            }
+        })
+    }
+
+    onSpeedTestFailed() {
+        this.socket.on(PLAYER_SOCKET_EVENTS.speed_test_failed, data => {
+            if (data && data.license_id) {
+                this.io.sockets.emit(SOCKET_EVENTS.speed_test_failed, data);
+                new ActivityLogger(LOG_TYPES.success, `__Player SpeedTest Failed: ${data.license_id}`);
             }
         })
     }

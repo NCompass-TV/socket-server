@@ -16,6 +16,9 @@ export enum SOCKET_EVENTS {
     reset = "SS_launch_reset", 
     restart = "SS_pi_restart",
     restart_anydesk = "SS_restart_anydesk",
+    speed_test = "SS_launch_speed_test",
+    speed_test_failed = "SS_speed_test_failed",
+    speed_test_success = "SS_speed_test_success",
     screenshot = "SS_launch_screenshot",
     screenshot_failed = "SS_screenshot_failed",
     screenshot_success = "SS_screenshot_success",
@@ -33,6 +36,7 @@ export enum DASHBOARD_SOCKET_EVENTS {
     restart = "D_pi_restart",
     restart_anydesk = "D_restart_anydesk",
     screenshot = "D_screenshot_pi",
+    speed_test = "D_speed_test",
     system_update_all = "D_system_udpate",
     system_update_by_license = "SS_remote_update_by_license"
 }
@@ -46,6 +50,8 @@ export enum PLAYER_SOCKET_EVENTS {
     online_pi = "PS_pi_is_online",
     screenshot_failed = "PS_screenshot_failed",
     screenshot_uplaoded = "PS_screenshot_uploaded",
+    speed_test_success = "speed_test_result",
+    speed_test_failed = "speed_test_failed",
     update_finish = "PS_update_finish"
 }
 
