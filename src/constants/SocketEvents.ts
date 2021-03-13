@@ -50,8 +50,8 @@ export enum PLAYER_SOCKET_EVENTS {
     online_pi = "PS_pi_is_online",
     screenshot_failed = "PS_screenshot_failed",
     screenshot_uplaoded = "PS_screenshot_uploaded",
-    speed_test_success = "speed_test_result",
-    speed_test_failed = "speed_test_failed",
+    speed_test_success = "PS_speed_test_success",
+    speed_test_failed = "PS_speed_test_failed",
     update_finish = "PS_update_finish"
 }
 

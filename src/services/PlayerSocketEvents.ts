@@ -31,7 +31,7 @@ export class PlayerSocketEvents {
         this.onScreenshotFailed();
         this.onScreenshotUploaded();
         this.onSpeedTestFailed();
-        this.onSpeedTestFailed();
+        this.onSpeedTestSuccess();
         this.onUpdateFinished();
     }
 
@@ -111,6 +111,7 @@ export class PlayerSocketEvents {
                     data.timeZone ? moment().tz(data.timeZone).format("MMMM DD, YYYY, h:mm:ss A") : ''
                 ))
 
+                this.io.sockets.emit(SOCKET_EVENTS.electron_up, data.licenseId);
                 new ActivityLogger(LOG_TYPES.success, `__Player is Online: ${data.licenseId}`);
             }
         })
@@ -138,7 +139,7 @@ export class PlayerSocketEvents {
         this.socket.on(PLAYER_SOCKET_EVENTS.speed_test_success, data => {
             if (data && data.license_id) {
                 this.io.sockets.emit(SOCKET_EVENTS.speed_test_success, data);
-                new ActivityLogger(LOG_TYPES.success, `__Player SpeedTest Success: ${data.license_id}`);
+                new ActivityLogger(LOG_TYPES.success, `__Player SpeedTest Success: ${data}`);
             }
         })
     }
