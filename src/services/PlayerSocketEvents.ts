@@ -33,6 +33,7 @@ export class PlayerSocketEvents {
         this.onSpeedTestFailed();
         this.onSpeedTestSuccess();
         this.onUpdateFinished();
+        this.onUIDead();
     }
 
     onAnydeskRequest() {
@@ -111,7 +112,7 @@ export class PlayerSocketEvents {
                     data.timeZone ? moment().tz(data.timeZone).format("MMMM DD, YYYY, h:mm:ss A") : ''
                 ))
 
-                this.io.sockets.emit(SOCKET_EVENTS.electron_up, data.licenseId);
+                this.io.sockets.emit(SOCKET_EVENTS.online_pi, data.licenseId);
                 new ActivityLogger(LOG_TYPES.success, `__Player is Online: ${data.licenseId}`);
             }
         })
@@ -158,6 +159,15 @@ export class PlayerSocketEvents {
             if (data) {
                 this.io.sockets.emit(SOCKET_EVENTS.content_update_success, data)
                 new ActivityLogger(LOG_TYPES.success, `__Player Content Update Success: ${data}`)
+            }
+        })
+    }
+
+    onUIDead() {
+        this.socket.on(PLAYER_SOCKET_EVENTS.ui_is_dead, data => {
+            if (data) {
+                this.io.sockets.emit(SOCKET_EVENTS.ui_is_dead, data);
+                new ActivityLogger(LOG_TYPES.warning, `__Player UI Died for: ${data}`)
             }
         })
     }

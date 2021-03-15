@@ -11,11 +11,13 @@ export enum SOCKET_EVENTS {
     offline_license = "SS_license_is_offline",
     offline_pi = "SS_offline_pi",
     offline_player = "SS_offline_player",
+    online_pi = "SS_online_pi",
     reboot_all = "SS_reboot_all",
     refetch = "SS_launch_refetch",
     reset = "SS_launch_reset", 
     restart = "SS_pi_restart",
     restart_anydesk = "SS_restart_anydesk",
+    restart_player = "SS_restart_player",
     speed_test = "SS_launch_speed_test",
     speed_test_failed = "SS_speed_test_failed",
     speed_test_success = "SS_speed_test_success",
@@ -23,7 +25,8 @@ export enum SOCKET_EVENTS {
     screenshot_failed = "SS_screenshot_failed",
     screenshot_success = "SS_screenshot_success",
     system_update_all = "SS_remote_update",
-    system_update_by_license = "D_system_update_by_license"
+    system_update_by_license = "D_system_update_by_license",
+    ui_is_dead = "SS_ui_is_dead"
 }
 
 export enum DASHBOARD_SOCKET_EVENTS {
@@ -34,6 +37,7 @@ export enum DASHBOARD_SOCKET_EVENTS {
     refetch = "D_refetch_pi", 
     reset = "D_reset_pi", 
     restart = "D_pi_restart",
+    restart_player = "D_player_restart",
     restart_anydesk = "D_restart_anydesk",
     screenshot = "D_screenshot_pi",
     speed_test = "D_speed_test",
@@ -52,7 +56,8 @@ export enum PLAYER_SOCKET_EVENTS {
     screenshot_uplaoded = "PS_screenshot_uploaded",
     speed_test_success = "PS_speed_test_success",
     speed_test_failed = "PS_speed_test_failed",
-    update_finish = "PS_update_finish"
+    update_finish = "PS_update_finish",
+    ui_is_dead = "PS_ui_is_dead"
 }
 
 export enum FILESTACK {

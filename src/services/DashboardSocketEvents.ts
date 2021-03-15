@@ -20,6 +20,7 @@ export class DashboardSocketEvents {
         this.onAnydeskRestart();
         this.onElectronCheck();
         this.onPiRestart();
+        this.onPlayerRestart();
         this.onRebootAll();
         this.onRefetchPlayerData();
         this.onResetPlayer();
@@ -64,7 +65,14 @@ export class DashboardSocketEvents {
     onPiRestart() {
 		this.socket.on(DASHBOARD_SOCKET_EVENTS.restart, (data: any) => {
             this.io.emit(SOCKET_EVENTS.restart, data);
-            new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart signal sent to license: ${data}`);
+            new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart Pi signal sent to license: ${data}`);
+        })
+    }
+
+    onPlayerRestart() {
+        this.socket.on(DASHBOARD_SOCKET_EVENTS.restart_player, (data: any) => {
+            this.io.emit(SOCKET_EVENTS.restart_player, data);
+            new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart Player signal sent to license: ${data}`);
         })
     }
 
