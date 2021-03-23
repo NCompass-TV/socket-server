@@ -1,17 +1,25 @@
 #Latest version of node tested on.
-FROM node:8-alpine
+FROM node:12-alpine as build
 
 WORKDIR /app
 
-# Only run npm install if these files change.
-ADD ./package.json /app/package.json
+ADD . /app
 
 # Install dependencies
 RUN npm install
+RUN npm run build-prod
+RUN npm run required-files
+RUN npm run install-prod
 
-# Add the rest of the sources
-ADD . /app
+
+#Latest version of node tested on.
+FROM node:12-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/bundle .
+
+
 
 EXPOSE 3000
-
 CMD ["npm","start"]
