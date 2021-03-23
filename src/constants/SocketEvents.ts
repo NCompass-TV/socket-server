@@ -26,7 +26,8 @@ export enum SOCKET_EVENTS {
     screenshot_success = "SS_screenshot_success",
     system_update_all = "SS_remote_update",
     system_update_by_license = "SS_remote_update_by_license",
-    ui_is_dead = "SS_ui_is_dead"
+    ui_is_dead = "SS_ui_is_dead",
+    upgrade_to_v2 = "SS_upgrade_to_v2_by_license"
 }
 
 export enum DASHBOARD_SOCKET_EVENTS {
@@ -42,7 +43,8 @@ export enum DASHBOARD_SOCKET_EVENTS {
     screenshot = "D_screenshot_pi",
     speed_test = "D_speed_test",
     system_update_all = "D_system_udpate",
-    system_update_by_license = "D_system_update_by_license"
+    system_update_by_license = "D_system_update_by_license",
+    upgrade_to_v2 = "D_upgrade_to_v2_by_license"
 }
 
 export enum PLAYER_SOCKET_EVENTS {
