@@ -29,6 +29,7 @@ export class DashboardSocketEvents {
         this.onSystemUpdate();
         this.onSystemUpdateByLicense();
         this.onUpdatePlayer();
+        this.onUpgradePlayer();
     }
 
     onAnydeskRequest() {
@@ -161,6 +162,15 @@ export class DashboardSocketEvents {
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Content Update signal sent to ${data}`);
             } else {
                 this.io.emit(SOCKET_EVENTS.offline_license, data);
+            }
+        })
+    }
+
+    onUpgradePlayer() {
+        this.socket.on(DASHBOARD_SOCKET_EVENTS.upgrade_to_v2, (data: any) => {
+            if (data) {
+                new ActivityLogger(LOG_TYPES.success, `__Dashboard Content Upgrade to V2 signal sent to ${data}`);
+                this.io.emit(SOCKET_EVENTS.upgrade_to_v2, data);
             }
         })
     }
