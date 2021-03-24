@@ -1,4 +1,3 @@
-import * as body_parser from 'body-parser';
 import * as dotenv from 'dotenv';
 import * as logsym from 'log-symbols';
 import SocketIO, { Server as IOServer } from 'socket.io';
@@ -14,7 +13,6 @@ class App {
     io: IOServer;
 
     constructor() {
-        
         // Initialize Environment Variables
         dotenv.config();
 
@@ -55,9 +53,12 @@ class App {
         // Morgan
         this.app.use(logger('dev'));
 
+        // SocketIO
+        this.app.set("io", this.io);
+
         // Body Parser
-        this.app.use(body_parser.json({ limit: '100mb' }));
-        this.app.use(body_parser.urlencoded({ limit: "100mb", extended: true, parameterLimit:50000 }));
+        this.app.use(express.json({ limit: '100mb' }));
+        this.app.use(express.urlencoded({ limit: "100mb", extended: true, parameterLimit:50000 }));
     }
 
     initRoutes() {
