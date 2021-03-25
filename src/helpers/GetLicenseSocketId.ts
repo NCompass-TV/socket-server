@@ -11,7 +11,7 @@ export class GetLicenseSocketId {
      * Get License Socket ID
      * @param data - License ID
     */
-    async invoke(data: any) {
+    async invoke(data: any): Promise<any> {
         try {
             const response: AxiosResponse = await axios.get(`${process.env.API_URL}/license/GetSocketByLicense?licenseId=${data}`);
 
@@ -26,5 +26,4 @@ export class GetLicenseSocketId {
             `Error on #AppendSocketIdToLicense.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
         }
     }
-
 } 

@@ -13,7 +13,7 @@ export class SaveLicensesAnydesk {
      * Save License's Anydesk
      * @param data - License and Anydesk info from Pi
     */
-    async invoke(data: PI_LicenseAnydesk) {
+    async invoke(data: PI_LicenseAnydesk): Promise<any> {
         try {
             const response: AxiosResponse = await axios.post(`${process.env.API_URL}/license/UpdateAnydeskId`, new API_LicenseAnydesk(data.license_id, data.anydesk));
             return response.data;
