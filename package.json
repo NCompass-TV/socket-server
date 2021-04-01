@@ -1,11 +1,14 @@
 {
   "name": "socket-server",
-  "version": "1.0.0",
-  "description": "Socket Server for communication between pi and dashboard.",
+  "version": "1.8.1",
+  "description": "Socket Server for communication between Player and Web Dashboard.",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",
-    "start": "node app.js"
+    "dev": "nodemon ./src/app.ts",
+    "start": "node ./src/app.js",
+    "build-prod": "tsc -p . && gulp bundleJS",
+    "required-files": "cp ./package.json ./bundle && cp ./package-lock.json ./bundle && cp ./.env ./bundle",
+    "install-prod": "npm install --production --prefix ./bundle"
   },
   "repository": {
     "type": "git",
@@ -16,17 +19,38 @@
     "Server",
     "Communication"
   ],
-  "author": "Vhin Gabuat",
+  "author": "Earl Gabuat",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/NCompass-TV/socket-server/issues"
   },
   "homepage": "https://github.com/NCompass-TV/socket-server#readme",
   "dependencies": {
-    "axios": "^0.19.2",
-    "body-parser": "^1.19.0",
+    "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "socket.io": "^2.3.0"
+    "log-symbols": "^4.0.0",
+    "moment-timezone": "^0.5.31",
+    "morgan": "^1.10.0",
+    "socket.io": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.10",
+    "@types/express": "^4.17.11",
+    "@types/morgan": "^1.9.2",
+    "@types/node": "^14.14.31",
+    "@types/socket.io": "^2.1.13",
+    "cz-conventional-changelog": "^3.3.0",
+    "gulp": "^4.0.2",
+    "gulp-uglify": "^3.0.2",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

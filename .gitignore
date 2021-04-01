@@ -2,8 +2,11 @@
 
 # compiled output
 /dist
+/bundle
 /tmp
 /out-tsc
+/bundle
+
 # Only exists if Bazel was run
 /bazel-out
 
