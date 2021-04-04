@@ -17,7 +17,7 @@ export class GetSocketLicenseId {
             return response.data;
         } catch (error) {
             new ActivityLogger(LOG_TYPES.error, 
-            `Error on #SendOfflineNotification.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
+            `Error on #GetSocketLicenseId.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
         }
     }
 

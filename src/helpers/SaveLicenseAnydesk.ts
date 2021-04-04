@@ -19,7 +19,7 @@ export class SaveLicensesAnydesk {
             return response.data;
         } catch (error) {
             new ActivityLogger(LOG_TYPES.error, 
-            `Error on #SendOfflineNotification.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
+            `Error on #SaveLicensesAnydesk.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
         }
     }
 }
