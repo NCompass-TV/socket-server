@@ -42,6 +42,9 @@ class App {
         // Initialize Socket IO Server
         this.io = new SocketIO(server);
 
+        // SocketIO
+        this.app.set("io", this.io);
+
         // Init Socket Events
         new SocketService(this.io).call();
     }
@@ -52,9 +55,6 @@ class App {
 
         // Morgan
         this.app.use(logger('dev'));
-
-        // SocketIO
-        this.app.set("io", this.io);
 
         // Body Parser
         this.app.use(express.json({ limit: '100mb' }));

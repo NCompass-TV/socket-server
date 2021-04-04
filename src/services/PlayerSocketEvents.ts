@@ -36,7 +36,7 @@ export class PlayerSocketEvents {
         this.onUIDead();
     }
 
-    onAnydeskRequest() {
+    onAnydeskRequest(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.anydesk_id, async (data: any) => {
             if (data) {
                 this.io.sockets.emit(SOCKET_EVENTS.anydesk_result, data);
@@ -46,7 +46,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onElectronDown() {
+    onElectronDown(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.electron_down, async (data: any) => {
             if (data) {
                 this.io.emit(SOCKET_EVENTS.offline_player, data);
@@ -67,7 +67,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onElectronUp() {
+    onElectronUp(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.electron_up, async (data: any) => {
             if (data) {
                 this.io.emit(SOCKET_EVENTS.electron_up, data);
@@ -83,7 +83,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onLicenseSaved() {
+    onLicenseSaved(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.license_saved, async (data: any) => {
             if (data) {
                 await new AppendSocketIdToLicense().invoke(new LicenseSocket(
@@ -97,7 +97,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onOnlinePi() {
+    onOnlinePi(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.online_pi, async (data: any) => {
             if (data) {
                 await new UpdateLicenseStatus().invoke(new PlayerStatus(
@@ -118,7 +118,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onScreenshotFailed() {
+    onScreenshotFailed(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.screenshot_failed, (data: any) => {
             if (data && data.license_id) {
                 this.io.sockets.emit(SOCKET_EVENTS.screenshot_failed, data.license_id);
@@ -127,7 +127,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onScreenshotUploaded() {
+    onScreenshotUploaded(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.screenshot_uplaoded, data => {
             if (data && data.license_id) {
                 this.io.sockets.emit(SOCKET_EVENTS.screenshot_success, data.license_id);
@@ -136,7 +136,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onSpeedTestSuccess() {
+    onSpeedTestSuccess(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.speed_test_success, data => {
             if (data && data.license_id) {
                 this.io.sockets.emit(SOCKET_EVENTS.speed_test_success, data);
@@ -145,7 +145,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onSpeedTestFailed() {
+    onSpeedTestFailed(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.speed_test_failed, data => {
             if (data && data.license_id) {
                 this.io.sockets.emit(SOCKET_EVENTS.speed_test_failed, data);
@@ -154,7 +154,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onUpdateFinished() {
+    onUpdateFinished(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.update_finish, data => {
             if (data) {
                 this.io.sockets.emit(SOCKET_EVENTS.content_update_success, data)
@@ -163,7 +163,7 @@ export class PlayerSocketEvents {
         })
     }
 
-    onUIDead() {
+    onUIDead(): void {
         this.socket.on(PLAYER_SOCKET_EVENTS.ui_is_dead, data => {
             if (data) {
                 this.io.sockets.emit(SOCKET_EVENTS.ui_is_dead, data);

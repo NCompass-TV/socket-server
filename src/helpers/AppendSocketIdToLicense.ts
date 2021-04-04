@@ -10,7 +10,7 @@ export class AppendSocketIdToLicense {
      * Append Socket ID to License
      * @param data - Socket
     */
-    async invoke(data: any) {
+    async invoke(data: any): Promise<any> {
         try {
             const response = await axios.post(`${process.env.API_URL}/license/UpdateSocketIds`, data);
             return response.data;

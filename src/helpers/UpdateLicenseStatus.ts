@@ -11,7 +11,7 @@ export class UpdateLicenseStatus {
      * Update License Pi and Player Status
      * @param data - License ID
     */
-    async invoke(data: any) {
+    async invoke(data: any): Promise<any> {
         try {
             const response: AxiosResponse = await axios.post(`${process.env.API_URL}/license/UpdatePiPlayerStatus`, data);
             return response.data;
@@ -20,5 +20,4 @@ export class UpdateLicenseStatus {
             `Error on #UpdateLicenseStatus.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
         }
     }
-
 }

@@ -28,7 +28,7 @@ export class SocketService {
         this.io = io;
     }
 
-    call() {
+    call(): void {
         this.io.on(SOCKET_EVENTS.connect, async (socket: Socket) => {
             new ActivityLogger(LOG_TYPES.success, `Socket Connection Established with Socket ID: ${socket.id}`);
 

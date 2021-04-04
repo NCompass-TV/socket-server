@@ -11,13 +11,13 @@ export class GetSocketLicenseId {
      * Get Socket License ID
      * @param data - Socket ID
     */
-    async invoke(data: any) {
+    async invoke(data: any): Promise<any> {
         try {
             const response: AxiosResponse = await axios.get(`${process.env.API_URL}/License/GetByPiSocketId?socketid=${data}`);
             return response.data;
         } catch (error) {
             new ActivityLogger(LOG_TYPES.error, 
-            `Error on #SendOfflineNotification.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
+            `Error on #GetSocketLicenseId.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
         }
     }
 

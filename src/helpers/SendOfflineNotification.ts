@@ -11,7 +11,7 @@ export class SendOfflineNotification {
      * Send Offline Notification
      * @param data - License ID
     */
-    async invoke(data: any) {
+    async invoke(data: any): Promise<any> {
         try {
             const response: AxiosResponse = await axios.post(`${process.env.API_URL}/notification/send`, data);
             return response.data;

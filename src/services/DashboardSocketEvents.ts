@@ -32,14 +32,14 @@ export class DashboardSocketEvents {
         this.onUpgradePlayer();
     }
 
-    onAnydeskRequest() {
+    onAnydeskRequest(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.anydesk, (data: any) => {
             this.io.emit(SOCKET_EVENTS.anydesk, data);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard Anydesk Request signal sent to license: ${data}`);
         })
     }
 
-    onAnydeskRestart() {
+    onAnydeskRestart(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.restart_anydesk, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
@@ -51,7 +51,7 @@ export class DashboardSocketEvents {
         })
     }
 
-    onElectronCheck() {
+    onElectronCheck(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.electron, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
@@ -63,28 +63,28 @@ export class DashboardSocketEvents {
         })
     }
 
-    onPiRestart() {
+    onPiRestart(): void {
 		this.socket.on(DASHBOARD_SOCKET_EVENTS.restart, (data: any) => {
             this.io.emit(SOCKET_EVENTS.restart, data);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart Pi signal sent to license: ${data}`);
         })
     }
 
-    onPlayerRestart() {
+    onPlayerRestart(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.restart_player, (data: any) => {
             this.io.emit(SOCKET_EVENTS.restart_player, data);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard Restart Player signal sent to license: ${data}`);
         })
     }
 
-    onRebootAll() {
+    onRebootAll(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.reboot_all, () => {
             this.io.emit(SOCKET_EVENTS.reboot_all);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard Reboot signal sent to all licenses`);
         })
     }
 
-    onRefetchPlayerData() {
+    onRefetchPlayerData(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.refetch, async (data) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
@@ -96,7 +96,7 @@ export class DashboardSocketEvents {
         })
     }
 
-    onResetPlayer() {
+    onResetPlayer(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.reset, async (data) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
@@ -116,7 +116,7 @@ export class DashboardSocketEvents {
         })
     }
 
-    onScreenshot() {
+    onScreenshot(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.screenshot, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
@@ -128,7 +128,7 @@ export class DashboardSocketEvents {
         })
     }
 
-    onSpeedTest() {
+    onSpeedTest(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.speed_test, async(data) => {
             const res: any = await new GetLicenseSocketId().invoke(data);
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
@@ -140,21 +140,21 @@ export class DashboardSocketEvents {
         })
     }
 
-    onSystemUpdate() {
+    onSystemUpdate(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.system_update_all, () => {
             this.io.emit(SOCKET_EVENTS.system_update_all);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard System Update signal sent to all licenses`);
         })
     }
 
-    onSystemUpdateByLicense() {
+    onSystemUpdateByLicense(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.system_update_by_license, data => {
             this.io.emit(SOCKET_EVENTS.system_update_by_license, data);
             new ActivityLogger(LOG_TYPES.success, `__Dashboard System Update signal sent to ${data}`);
         })
     }
 
-    onUpdatePlayer() {
+    onUpdatePlayer(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.content, async (data: any) => {
             const res: any = await new GetLicenseSocketId().invoke(data)
             if (res && this.io.sockets.connected[res.piSocketId] !== undefined) {
@@ -166,7 +166,7 @@ export class DashboardSocketEvents {
         })
     }
 
-    onUpgradePlayer() {
+    onUpgradePlayer(): void {
         this.socket.on(DASHBOARD_SOCKET_EVENTS.upgrade_to_v2, (data: any) => {
             if (data) {
                 new ActivityLogger(LOG_TYPES.success, `__Dashboard Content Upgrade to V2 signal sent to ${data}`);
