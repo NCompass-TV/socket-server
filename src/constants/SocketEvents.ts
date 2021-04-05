@@ -42,7 +42,7 @@ export enum DASHBOARD_SOCKET_EVENTS {
     restart_anydesk = "D_restart_anydesk",
     screenshot = "D_screenshot_pi",
     speed_test = "D_speed_test",
-    system_update_all = "D_system_udpate",
+    system_update_all = "D_system_update",
     system_update_by_license = "D_system_update_by_license",
     upgrade_to_v2 = "D_upgrade_to_v2_by_license"
 }
