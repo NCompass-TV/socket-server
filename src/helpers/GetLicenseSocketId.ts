@@ -17,13 +17,13 @@ export class GetLicenseSocketId {
 
             if (response.data && response.data.message) {
                 new ActivityLogger(LOG_TYPES.info, 
-                `Warning on #AppendSocketIdToLicense.invoke(): { message: ${response.data.message}, payload: ${JSON.stringify(data)}}`);
+                `Warning on #GetLicenseSocketId.invoke(): { message: ${response.data.message}, payload: ${JSON.stringify(data)}}`);
             }
 
             return response.data;
         } catch (error) {
             new ActivityLogger(LOG_TYPES.error, 
-            `Error on #AppendSocketIdToLicense.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
+            `Error on #GetLicenseSocketId.invoke(): { message: ${error.message}, payload: ${JSON.stringify(data)}}`);
         }
     }
 } 

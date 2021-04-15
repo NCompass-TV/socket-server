@@ -27,8 +27,8 @@ class App {
         })
 
         this.app.get('/', (req: Request, res: Response) => {
-            res.status(400).send({
-                error: "Invalid Endpoint"   
+            res.status(200).send({
+                message: "Silence is Golden ..."   
             })
         })
 
