@@ -30,7 +30,9 @@ export class SocketService {
 
     call(): void {
         this.io.on(SOCKET_EVENTS.connect, async (socket: Socket) => {
-            new ActivityLogger(LOG_TYPES.success, `Socket Connection Established with Socket ID: ${socket.id}`);
+            const client_type = socket.handshake.query.client ? JSON.parse(JSON.stringify(socket.handshake.query.client)) : 'Dashboard';
+
+            new ActivityLogger(LOG_TYPES.success, `${client_type} connected with Socket ID: ${socket.id}`);
 
             /** Dashboard Socket Events **/
             new DashboardSocketEvents(this.io, socket);
