@@ -3,9 +3,17 @@
 
 import axios, { AxiosResponse } from 'axios';
 import { LOG_TYPES } from '../constants/Logger';
+import { envconfig } from '../environment/envconfig';
 import { ActivityLogger } from './AcitivityLogger';
 
 export class GetLicenseSocketId {
+    environment: {
+        uri: string | undefined
+    }
+
+    constructor() {
+        this.environment = envconfig();
+    }
 
     /**
      * Get License Socket ID
@@ -13,7 +21,7 @@ export class GetLicenseSocketId {
     */
     async invoke(data: any): Promise<any> {
         try {
-            const response: AxiosResponse = await axios.get(`${process.env.API_URL}/license/GetSocketByLicense?licenseId=${data}`);
+            const response: AxiosResponse = await axios.get(`${this.environment.uri}/license/GetSocketByLicense?licenseId=${data}`);
 
             if (response.data && response.data.message) {
                 new ActivityLogger(LOG_TYPES.info, 

@@ -5,9 +5,17 @@ import axios, { AxiosResponse } from 'axios';
 import { API_LicenseAnydesk, PI_LicenseAnydesk } from '../models/LicenseAnydesk';
 import { ActivityLogger } from './AcitivityLogger';
 import { LOG_TYPES } from '../constants/Logger';
+import { envconfig } from '../environment/envconfig';
 
 
 export class SaveLicensesAnydesk {
+    environment: {
+        uri: string | undefined
+    }
+
+    constructor() {
+        this.environment = envconfig();
+    }
     
     /**
      * Save License's Anydesk
@@ -15,7 +23,7 @@ export class SaveLicensesAnydesk {
     */
     async invoke(data: PI_LicenseAnydesk): Promise<any> {
         try {
-            const response: AxiosResponse = await axios.post(`${process.env.API_URL}/license/UpdateAnydeskId`, new API_LicenseAnydesk(data.license_id, data.anydesk));
+            const response: AxiosResponse = await axios.post(`${this.environment.uri}/license/UpdateAnydeskId`, new API_LicenseAnydesk(data.license_id, data.anydesk));
             return response.data;
         } catch (error) {
             new ActivityLogger(LOG_TYPES.error, 

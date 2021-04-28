@@ -3,9 +3,17 @@
 
 import axios, { AxiosResponse } from 'axios';
 import { LOG_TYPES } from '../constants/Logger';
+import { envconfig } from '../environment/envconfig';
 import { ActivityLogger } from './AcitivityLogger';
 
 export class SendOfflineNotification {
+    environment: {
+        uri: string | undefined
+    }
+
+    constructor() {
+        this.environment = envconfig();
+    }
     
     /**
      * Send Offline Notification
@@ -13,7 +21,7 @@ export class SendOfflineNotification {
     */
     async invoke(data: any): Promise<any> {
         try {
-            const response: AxiosResponse = await axios.post(`${process.env.API_URL}/notification/send`, data);
+            const response: AxiosResponse = await axios.post(`${this.environment.uri}/notification/send`, data);
             return response.data;
         } catch (error) {
             new ActivityLogger(LOG_TYPES.error, 

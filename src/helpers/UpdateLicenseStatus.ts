@@ -4,8 +4,16 @@
 import axios, { AxiosResponse } from 'axios';
 import { ActivityLogger } from './AcitivityLogger';
 import { LOG_TYPES } from '../constants/Logger';
+import { envconfig } from '../environment/envconfig';
 
 export class UpdateLicenseStatus {
+    environment: {
+        uri: string | undefined
+    }
+
+    constructor() {
+        this.environment = envconfig();
+    }
 
     /**
      * Update License Pi and Player Status
@@ -13,7 +21,7 @@ export class UpdateLicenseStatus {
     */
     async invoke(data: any): Promise<any> {
         try {
-            const response: AxiosResponse = await axios.post(`${process.env.API_URL}/license/UpdatePiPlayerStatus`, data);
+            const response: AxiosResponse = await axios.post(`${this.environment.uri}/license/UpdatePiPlayerStatus`, data);
             return response.data;
         } catch (error) {
             new ActivityLogger(LOG_TYPES.error, 

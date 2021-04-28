@@ -19,7 +19,5 @@ WORKDIR /app
 
 COPY --from=build /app/bundle .
 
-
-
 EXPOSE 3000
 CMD ["npm","start"]
